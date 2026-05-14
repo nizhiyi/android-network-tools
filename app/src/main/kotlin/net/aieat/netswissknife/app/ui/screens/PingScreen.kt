@@ -849,7 +849,7 @@ private fun StatsCard(stats: PingStats, host: String) {
                 )
                 StatItem(
                     label = stringResource(R.string.ping_packet_loss),
-                    value = "${"%.0f".format(stats.lossPercent)}%",
+                    value = "${"%.1f".format(stats.lossPercent)}%",
                     color = if (stats.lossPercent == 0f)
                         MaterialTheme.colorScheme.tertiary
                     else

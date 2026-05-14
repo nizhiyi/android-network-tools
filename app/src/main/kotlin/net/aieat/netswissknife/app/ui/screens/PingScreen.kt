@@ -393,7 +393,7 @@ private fun PingInputCard(
                 PingSliderRow(
                     label = "${stringResource(R.string.ping_count_label)}: $count",
                     value = count.toFloat(),
-                    valueRange = 1f..50f,
+                    valueRange = 1f..100f,
                     steps = 48,
                     onValueChange = { onCountChange(it.toInt()) },
                     enabled = !isRunning
@@ -610,7 +610,7 @@ private fun PingRunningPanel(state: PingUiState.Running) {
                             MaterialTheme.colorScheme.error
                         LiveStatLabel(
                             label = stringResource(R.string.ping_packet_loss),
-                            value = "${"%.0f".format(liveStats.lossPercent)}%",
+                            value = "${"%.1f".format(liveStats.lossPercent)}%",
                             color = lossColor
                         )
                         if (liveStats.received > 0) {
@@ -628,9 +628,9 @@ private fun PingRunningPanel(state: PingUiState.Running) {
             RttChartCard(packets = state.packets)
         }
 
-        // Live packet list — bounded to last 50 in continuous mode
+        // Live packet list — bounded to last 100 in continuous mode
         if (state.packets.isNotEmpty()) {
-            val displayPackets = if (state.isContinuous) state.packets.takeLast(50) else state.packets
+            val displayPackets = if (state.isContinuous) state.packets.takeLast(100) else state.packets
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(

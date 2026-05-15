@@ -625,12 +625,12 @@ private fun PingRunningPanel(state: PingUiState.Running) {
 
         // Live RTT chart (rolling window in continuous mode)
         if (state.packets.any { it.rtTimeMs != null }) {
-            RttChartCard(packets = state.packets.takeLast(200))
+            RttChartCard(packets = state.packets.takeLast(120))
         }
 
         // Live packet list — bounded to last 50 in continuous mode
         if (state.packets.isNotEmpty()) {
-            val displayPackets = if (state.isContinuous) state.packets.takeLast(50).reversed().toMutableList() else state.packets.reversed().toMutableList()
+            val displayPackets = if (state.isContinuous) state.packets.takeLast(60).reversed().toMutableList() else state.packets.reversed().toMutableList()
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(

@@ -639,7 +639,7 @@ private fun PingRunningPanel(state: PingUiState.Running) {
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    LazyColumn(reverseLayout = true) {
+                    LazyColumn(modifier = Modifier.heightIn(max = 320.dp)) {
                         items(displayPackets) { packet -> PacketRow(packet) }
                     }
                 }

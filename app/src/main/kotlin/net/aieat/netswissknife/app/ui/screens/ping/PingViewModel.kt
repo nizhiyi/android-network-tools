@@ -57,7 +57,7 @@ class PingViewModel @Inject constructor(
 ) : ViewModel() {
 
     companion object {
-        private const val ROLLING_WINDOW = 600
+        private const val ROLLING_WINDOW = 1800
     }
 
     private val _uiState = MutableStateFlow<PingUiState>(PingUiState.Idle)

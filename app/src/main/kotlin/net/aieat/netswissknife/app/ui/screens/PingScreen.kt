@@ -630,7 +630,7 @@ private fun PingRunningPanel(state: PingUiState.Running) {
 
         // Live packet list — bounded to last 50 in continuous mode
         if (state.packets.isNotEmpty()) {
-            val displayPackets = if (state.isContinuous) state.packets.takeLast(50) else state.packets
+            val displayPackets = if (state.isContinuous) state.packets.takeLast(50).reversed().toMutableList() else state.packets.reversed().toMutableList()
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(

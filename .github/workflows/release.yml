@@ -1,4 +1,4 @@
-name: Release – Package & Publish
+name: Release – Package
 
 on:
   push:

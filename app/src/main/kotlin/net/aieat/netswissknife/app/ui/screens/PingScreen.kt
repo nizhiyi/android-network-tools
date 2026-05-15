@@ -625,7 +625,7 @@ private fun PingRunningPanel(state: PingUiState.Running) {
 
         // Live RTT chart (rolling window in continuous mode)
         if (state.packets.any { it.rtTimeMs != null }) {
-            RttChartCard(packets = state.packets)
+            RttChartCard(packets = state.packets.takeLast(200))
         }
 
         // Live packet list — bounded to last 50 in continuous mode

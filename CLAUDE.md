@@ -45,13 +45,13 @@ android-network-tools/
 
 | Concern | Technology | Notes |
 |---------|-----------|-------|
-| Language | Kotlin 2.3.x | JDK 21, Kotlin DSL everywhere |
+| Language | Kotlin 2.4.x | JDK 21, Kotlin DSL everywhere |
 | UI | Jetpack Compose + Material 3 | **High-fidelity, animated UI required** |
 | Navigation | Navigation Compose 2.9.x | Bottom nav + animated transitions |
 | DI | Hilt 2.60.x | `@HiltViewModel`, `@AndroidEntryPoint` |
 | Async | Coroutines + Flow | `viewModelScope`, `StateFlow` |
 | Testing | JUnit 5 + MockK | TDD (Red → Green → Refactor) |
-| Build | Gradle 9.x Kotlin DSL + Version Catalog | `gradle/libs.versions.toml` |
+| Build | AGP 9.x, Gradle 9.x Kotlin DSL + Version Catalog | `gradle/libs.versions.toml` |
 | Min SDK | 26 (Android 8.0) | Target SDK 37 |
 
 ---
@@ -176,7 +176,16 @@ REFACTOR: Clean up → ./gradlew test (all pass)
 
 # Clean
 ./gradlew clean
+
+# Coverage (Kover)
+./gradlew :app:koverVerify        # enforce 100% on pure, non-Compose app logic
+./gradlew :app:koverHtmlReport    # scoped :app report
+./gradlew :core-network:koverHtmlReport :core-domain:koverHtmlReport
 ```
+
+> Run only one Gradle invocation at a time on memory-constrained hosts.
+> Concurrent builds share `org.gradle.jvmargs=-Xmx1536m` and make test workers
+> time out or crash in ways that look like real test failures.
 
 ---
 

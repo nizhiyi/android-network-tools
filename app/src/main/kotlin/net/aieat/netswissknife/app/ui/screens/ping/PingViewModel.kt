@@ -61,7 +61,7 @@ class PingViewModel @Inject constructor(
 ) : ViewModel() {
 
     companion object {
-        private const val ROLLING_WINDOW = 100
+        private const val ROLLING_WINDOW = 1800
         private const val NO_NETWORK_CONNECTION = "No network connection"
     }
 

@@ -428,7 +428,7 @@ private fun PingInputCard(
                 PingSliderRow(
                     label = "${stringResource(R.string.ping_count_label)}: $count",
                     value = count.toFloat(),
-                    valueRange = 1f..50f,
+                    valueRange = 1f..100f,
                     steps = 48,
                     onValueChange = { onCountChange(it.toInt()) },
                     enabled = !isRunning
@@ -673,7 +673,7 @@ private fun PingRunningPanel(state: PingUiState.Running) {
                             MaterialTheme.colorScheme.error
                         LiveStatLabel(
                             label = stringResource(R.string.ping_packet_loss),
-                            value = "${"%.0f".format(liveStats.lossPercent)}%",
+                            value = "${"%.1f".format(liveStats.lossPercent)}%",
                             color = lossColor
                         )
                         if (liveStats.received > 0) {
@@ -688,13 +688,13 @@ private fun PingRunningPanel(state: PingUiState.Running) {
 
         // Live RTT chart (rolling window in continuous mode)
         if (state.packets.any { it.rtTimeMs != null }) {
-            RttChartCard(packets = state.packets)
+            RttChartCard(packets = state.packets.takeLast(120))
         }
 
         // Live packet list — bounded to last 50 in continuous mode
         if (state.packets.isNotEmpty()) {
             val displayLimit = 50
-            val displayPackets = if (state.isContinuous) state.packets.takeLast(displayLimit) else state.packets
+            val displayPackets = if (state.isContinuous) state.packets.takeLast(displayLimit).reversed().toMutableList() else state.packets.reversed().toMutableList()
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
@@ -914,7 +914,7 @@ private fun StatsCard(stats: PingStats, host: String) {
                 )
                 StatItem(
                     label = stringResource(R.string.ping_packet_loss),
-                    value = "${"%.0f".format(animLoss)}%",
+                    value = "${"%.1f".format(animLoss)}%",
                     color = if (stats.lossPercent == 0f)
                         MaterialTheme.colorScheme.tertiary
                     else
